@@ -18,7 +18,7 @@ class RoomAdmin(admin.ModelAdmin):
 
 
 class ReservationAdmin(admin.ModelAdmin):
-    list_display = ('user', 'date', 'time', 'is_upcoming')
+    list_display = ('user', 'date', 'time', 'slug', 'is_upcoming')
     list_display_links = ('user', )
     search_fields = ('user', 'date')
     list_per_page = 8

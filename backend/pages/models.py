@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import pre_save
+from backend.utils import reservation_slug_generator
 
 # Create your models here.
 
@@ -39,6 +41,7 @@ class Reservation(models.Model):
     ]
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     room = models.ForeignKey(Room, on_delete=models.DO_NOTHING)
+    slug = models.SlugField(max_length=100, null=True, blank=True, default=None)
 #   date_begin = models.DateTimeField()
 #   date_end = models.DateTimeField()
     date = models.DateField()
@@ -46,7 +49,7 @@ class Reservation(models.Model):
     is_upcoming = models.BooleanField()
 
     def __str__(self):
-        return self.user.first_name
+        return self.slug
 
 
 class Message(models.Model):
@@ -57,3 +60,6 @@ class Message(models.Model):
 
     def __str__(self):
         return self.content[0:10]
+
+
+pre_save.connect(reservation_slug_generator, sender=Reservation)
