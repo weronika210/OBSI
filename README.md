@@ -18,4 +18,4 @@ git add .
 
 git commit -m "komentarz"
 
-git push
+git push 
